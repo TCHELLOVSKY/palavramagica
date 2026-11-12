@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palavras Mágicas - Instalar App</title>
     
-    <!-- Link do PWA Manifest -->
-    <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#4CAF50">
+    <!-- Nomes exatos dos arquivos que estão no seu GitHub -->
+    <link rel="manifest" href="./manifesto.webmanifest">
+    <meta name="theme-color" content="#121212">
 
     <style>
         * {
@@ -18,149 +18,124 @@
 
         body {
             background-color: #121212;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #ffffff;
+            overflow: hidden;
         }
 
-        /* Container principal simulando a proporção 9:16 do celular */
+        /* Container principal mantendo a proporção exata 9:16 da imagem */
         .app-container {
             width: 100%;
             max-width: 414px;
-            height: 100vh;
-            max-height: 896px;
+            aspect-ratio: 9 / 16;
+            max-height: 100vh;
             background-image: url('https://i.postimg.cc/bNP7qs6Q/Gemini-Generated-Image-mk5whqmk5whqmk5w.jpg');
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 40px;
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
 
-        /* Camada para escurecer levemente a parte inferior */
-        .overlay {
+        /* Posicionamento exato em cima da pílula azul da imagem */
+        .pill-slot {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 280px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
-            z-index: 1;
-        }
-
-        /* Container dos botões */
-        .actions-container {
-            position: relative;
-            z-index: 2;
-            width: 90%;
+            top: 62.3%; /* Altura exata do botão azul na arte */
+            left: 5.5%;
+            width: 89%;
+            height: 6.2%;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            text-align: center;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
         }
 
-        /* Botão de Instalação (PWA) */
-        #btn-install {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            color: white;
-            padding: 15px 20px;
-            font-size: 16px;
+        /* Estilo unificado para preencher a pílula azul perfeitamente */
+        .action-btn {
+            width: 100%;
+            height: 100%;
+            border-radius: 999px;
             border: none;
-            border-radius: 12px;
+            background-color: #A8C7FA; /* Mesmo tom azul claro da Google Play na imagem */
+            color: #041E49; /* Azul escuro para contraste nativo */
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Botão de Acesso Direto ao Jogo */
-        .btn-play {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            color: white;
-            padding: 12px 20px;
-            font-size: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-decoration: none;
-            display: inline-block;
-            transition: background 0.2s;
+            transition: transform 0.15s ease, filter 0.15s ease;
         }
 
-        .btn-play:hover {
-            background: rgba(255, 255, 255, 0.25);
+        .action-btn:active {
+            transform: scale(0.97);
+            filter: brightness(0.92);
         }
     </style>
 </head>
 <body>
 
     <div class="app-container">
-        <div class="overlay"></div>
-        
-        <div class="actions-container">
-            <!-- Botão de Instalação (Sua exibição depende do evento PWA) -->
-            <div id="install-container" style="display: none;">
-                <button id="btn-install">
-                    Instalar o App 🚀
-                </button>
-            </div>
+        <!-- Espaço exato do botão azul -->
+        <div class="pill-slot">
+            <!-- Botão de Instalação (aparece se o navegador liberar o PWA) -->
+            <button id="btn-install" class="action-btn" style="display: none;">
+                Instalar
+            </button>
 
-            <!-- Botão Direto para o Jogo (Garante acesso imediato) -->
-            <a href="./jogo.html" class="btn-play">
-                Jogar no Navegador 🎮
+            <!-- Botão padrão para abrir o jogo caso já esteja instalado ou no navegador -->
+            <a id="btn-play" href="./jogo.html" class="action-btn">
+                Jogar Agora
             </a>
         </div>
     </div>
 
-    <!-- Script PWA e Lógica de Instalação -->
     <script>
-        // Registrar o Service Worker
+        // Registrando o service-worker.js com o nome exato do seu repositório
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((reg) => console.log('Service Worker registrado:', reg.scope))
-                    .catch((err) => console.log('Falha no Service Worker:', err));
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then((reg) => console.log('Service Worker ativo:', reg.scope))
+                    .catch((err) => console.log('Erro no Service Worker:', err));
             });
         }
 
         let deferredPrompt;
+        const btnInstall = document.getElementById('btn-install');
+        const btnPlay = document.getElementById('btn-play');
 
+        // Quando o Android/Chrome identificar que o app pode ser instalado:
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             
-            // Mostra o botão de instalação assim que o navegador validar o PWA
-            const installContainer = document.getElementById('install-container');
-            if (installContainer) {
-                installContainer.style.display = 'block';
+            // Troca o botão "Jogar Agora" pelo "Instalar" exatamente no mesmo lugar
+            btnPlay.style.display = 'none';
+            btnInstall.style.display = 'flex';
+        });
+
+        // Ação de clique no botão Instalar
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                
+                // Após instalar (ou fechar o aviso), volta para o botão Jogar Agora
+                btnInstall.style.display = 'none';
+                btnPlay.style.display = 'flex';
             }
         });
 
-        const btnInstall = document.getElementById('btn-install');
-        if (btnInstall) {
-            btnInstall.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`Resultado da instalação: ${outcome}`);
-                    deferredPrompt = null;
-                    document.getElementById('install-container').style.display = 'none';
-                }
-            });
-        }
+        // Se o app já estiver instalado e rodando em modo standalone, muda o texto
+        window.addEventListener('appinstalled', () => {
+            btnInstall.style.display = 'none';
+            btnPlay.style.display = 'flex';
+        });
     </script>
 </body>
 </html>
