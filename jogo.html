@@ -837,7 +837,7 @@
     .portal-background-glow {
         position: absolute; width: 650px; height: 650px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(192, 132, 252, 0.15) 45%, transparent 70%); filter: blur(50px); animation: pulseAura 7s infinite alternate ease-in-out; pointer-events: none; z-index: 2;
     }
-    .intro-container { position: relative; z-index: 3; width: 100%; max-width: 680px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .intro-container { position: relative; z-index: 3; width: 100%; max-width: 680px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
     .intro-header { text-align: center; }
     .clans-emblems { display: flex; justify-content: center; gap: 12px; margin-bottom: 6px; }
     .clan-badge { font-size: 1.5rem; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.85); border: 2px solid; }
@@ -847,14 +847,42 @@
     .clan-badge.ar    { border-color: #c084fc; }
     .game-title { font-family: 'Cinzel', serif; font-size: 2.2rem; font-weight: 900; color: #fef08a; letter-spacing: 3px; text-shadow: 0 0 20px rgba(250, 204, 21, 0.7); margin: 0; }
     .game-subtitle { font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 700; color: #94a3b8; letter-spacing: 2px; margin-top: 4px; }
-    .portal-card { position: relative; width: 100%; background: rgba(15, 23, 42, 0.85); border: 2px solid rgba(251, 191, 36, 0.5); border-radius: 24px; padding: 24px 20px; backdrop-filter: blur(12px); text-align: center; }
-    .magic-input-wrapper { position: relative; max-width: 320px; margin: 0 auto; }
-    .magic-input { width: 100%; padding: 12px 48px 12px 16px; border-radius: 14px; border: 2px solid #64748b; background: rgba(2, 6, 23, 0.9); color: #f8fafc; font-size: 1.1rem; font-weight: 700; text-align: center; outline: none; }
-    .sparkle-icon-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: transparent; border: none; font-size: 1.3rem; cursor: pointer; }
-    .magic-error-msg { color: #fca5a5; font-size: 0.8rem; font-weight: 700; min-height: 22px; margin-top: 6px; }
-    .btn-portal-enter { margin-top: 8px; width: 100%; max-width: 320px; padding: 12px; border-radius: 14px; border: none; background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); color: #ffffff; font-family: 'Cinzel', serif; font-weight: 900; cursor: pointer; }
+    .portal-card { position: relative; width: 100%; background: rgba(15, 23, 42, 0.85); border: 2px solid rgba(251, 191, 36, 0.5); border-radius: 24px; padding: 7px 8px; backdrop-filter: blur(12px); text-align: center; }
+    .portal-title { margin: 2px 0 4px; font-size: 1rem; }
+    .portal-mosaic { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; width: min(100%, 280px); margin: 4px auto 1px; }
+    .portal-mosaic img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border: 2px solid rgba(251, 191, 36, 0.72); border-radius: 12px; box-shadow: 0 0 14px rgba(251, 191, 36, 0.18); }
+    .portal-player-choice { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 3px auto 2px; color: #cbd5e1; font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 900; letter-spacing: 1px; }
+    .portal-player-option { padding: 4px 9px; border: 1px solid rgba(148,163,184,.35); border-radius: 999px; color: #94a3b8; background: rgba(2,6,23,.5); transition: .2s ease; }
+    .portal-player-option.active { color: #fef3c7; border-color: #fbbf24; background: rgba(120,53,15,.42); box-shadow: 0 0 10px rgba(251,191,36,.28); }
+    .portal-selection-hint { min-height: 1em; margin: 0 auto 3px; color: #cbd5e1; font-size: .68rem; font-weight: 700; }
+    .portal-element-choice { display: block; padding: 0; overflow: hidden; border: 0; border-radius: 12px; background: transparent; cursor: pointer; transition: transform .18s ease, filter .18s ease; }
+    .portal-element-choice img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border: 2px solid rgba(251, 191, 36, 0.72); border-radius: 12px; box-shadow: 0 0 14px rgba(251, 191, 36, 0.18); transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+    .portal-element-choice.selected { transform: scale(.97); }
+    .portal-element-choice.selected.elemento-fogo img { border-color: #ff4e50; box-shadow: 0 0 8px 3px rgba(255,78,80,.9), 0 0 22px 7px rgba(255,78,80,.55); }
+    .portal-element-choice.selected.elemento-agua img { border-color: #00d2ff; box-shadow: 0 0 8px 3px rgba(0,210,255,.95), 0 0 22px 7px rgba(0,210,255,.58); }
+    .portal-element-choice.selected.elemento-terra img { border-color: #2ecc71; box-shadow: 0 0 8px 3px rgba(46,204,113,.95), 0 0 22px 7px rgba(46,204,113,.58); }
+    .portal-element-choice.selected.elemento-ar img { border-color: #c084fc; box-shadow: 0 0 8px 3px rgba(192,132,252,.95), 0 0 22px 7px rgba(192,132,252,.58); }
+    .btn-portal-enter { margin-top: 0; width: 100%; max-width: 300px; padding: 10px; border-radius: 14px; border: none; background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); color: #ffffff; font-family: 'Cinzel', serif; font-weight: 900; cursor: pointer; }
     .intro-menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
     .btn-intro-menu { padding: 12px; border-radius: 14px; border: 2px solid rgba(255, 255, 255, 0.15); background: rgba(30, 41, 59, 0.7); color: #f1f5f9; font-size: 0.85rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    @media (max-width: 600px) and (max-height: 900px) {
+        .intro-screen-overlay { align-items: flex-start; justify-content: center; padding: max(6px, env(safe-area-inset-top)) 10px 8px; }
+        .intro-container { gap: 5px; margin: 0 auto; }
+        .clans-emblems { gap: 7px; margin-bottom: 2px; }
+        .clan-badge { width: 34px; height: 34px; font-size: 1.2rem; }
+        .game-title { font-size: 1.65rem; line-height: 1.05; letter-spacing: 1px; }
+        .game-subtitle { font-size: 0.58rem; line-height: 1.15; letter-spacing: 1px; margin-top: 2px; }
+        .portal-card { padding: 5px 6px; border-radius: 18px; }
+        .portal-mosaic { width: min(100%, 260px); gap: 4px; margin: 2px auto 0; }
+        .portal-mosaic img { border-radius: 9px; }
+        .portal-element-choice img { border-radius: 9px; }
+        .portal-player-choice { margin: 1px auto; gap: 5px; }
+        .portal-selection-hint { margin-bottom: 1px; }
+        .btn-portal-enter { padding: 9px 8px; font-size: 0.9rem; }
+        .intro-menu-grid { gap: 6px; }
+        .btn-intro-menu { min-height: 44px; padding: 8px 5px; font-size: 0.78rem; gap: 5px; }
+        .intro-footer { margin-top: 2px !important; font-size: 0.62rem !important; }
+    }
     .intro-modal-overlay { position: fixed; inset: 0; z-index: 1000000; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 16px; }
     .intro-modal-overlay.active { display: flex; }
     .intro-modal-card { background: #0f172a; border: 2px solid #334155; border-radius: 20px; max-width: 500px; width: 100%; padding: 20px; color: #e2e8f0; }
@@ -1029,24 +1057,25 @@
         <div class="portal-card">
             <div class="portal-ring"></div>
             <div class="portal-content">
-                <div class="portal-icon">✨🗝️✨</div>
                 <h2 class="portal-title">PORTAL DOS CONJURADORES</h2>
-                <p class="portal-label">Digite a Palavra Mágica para Entrar no Jogo</p>
-                
-                <div class="magic-input-wrapper">
-                    <input type="password" id="introPassInput" class="magic-input" placeholder="Palavra Mágica." autocomplete="off">
-                    <button type="button" class="sparkle-icon-btn" onclick="alternarVisibilidadeSenha();" title="Desocultar/Ocultar Senha">
-                        <span id="passToggleIcon">🔮</span>
-                    </button>
+                <div class="portal-player-choice" aria-label="Escolha um ou dois jogadores">
+                    <span id="portalModeOne" class="portal-player-option active">1 PLAYER</span>
+                    <span aria-hidden="true">OU</span>
+                    <span id="portalModeTwo" class="portal-player-option">2 PLAYERS</span>
                 </div>
-                
-                <div id="introErrorMsg" class="magic-error-msg"></div>
-
-                <button type="button" id="btnEntrarPortal" class="btn-portal-enter" onclick="tentarEntrarPortal();">
-                    <span>⚡ DESPERTAR O PORTAL ⚡</span>
-                </button>
+                <p id="portalSelectionHint" class="portal-selection-hint" aria-live="polite">Toque em 1 ou 2 elementais</p>
+                <div class="portal-mosaic" aria-label="Selecione um ou dois elementais: Fogo, Água, Terra e Ar">
+                    <button type="button" class="portal-element-choice elemento-fogo" data-elemento="fogo" aria-label="Selecionar elemental do Fogo" aria-pressed="false" onclick="selecionarElementalPortal('fogo');"><img src="https://i.postimg.cc/Ln7GRkDz/Elementalfogo.jpg" alt="Elemental do Fogo"></button>
+                    <button type="button" class="portal-element-choice elemento-agua" data-elemento="agua" aria-label="Selecionar elemental da Água" aria-pressed="false" onclick="selecionarElementalPortal('agua');"><img src="https://i.postimg.cc/sv8byPmW/Elementalagua.jpg" alt="Elemental da Água"></button>
+                    <button type="button" class="portal-element-choice elemento-terra" data-elemento="terra" aria-label="Selecionar elemental da Terra" aria-pressed="false" onclick="selecionarElementalPortal('terra');"><img src="https://i.postimg.cc/rKb7cGjG/Elementalterra.jpg" alt="Elemental da Terra"></button>
+                    <button type="button" class="portal-element-choice elemento-ar" data-elemento="ar" aria-label="Selecionar elemental do Ar" aria-pressed="false" onclick="selecionarElementalPortal('ar');"><img src="https://i.postimg.cc/w7PnH52X/Elementalar.jpg" alt="Elemental do Ar"></button>
+                </div>
             </div>
         </div>
+
+        <button type="button" id="btnEntrarPortal" class="btn-portal-enter" onclick="tentarEntrarPortal();">
+            <span>⚡ DESPERTAR O PORTAL ⚡</span>
+        </button>
 
         <nav class="intro-menu-grid">
             <button class="btn-intro-menu btn-historia" onclick="abrirModalIntro('modalHistoria');">
@@ -1266,19 +1295,7 @@
         <div class="q2-bottom-word">
             <div id="modeSelectBox" class="config-three-sections">
                 <div class="config-section-card">
-                    <span class="config-section-title">1. Modo de Duelo</span>
-                    <div class="config-btn-row">
-                        <button class="config-opt-btn active-opt" id="btnPlayers1" onclick="selecionarModoPlayers(1);">
-                            <span>🎯 1 Player</span>
-                        </button>
-                        <button class="config-opt-btn" id="btnPlayers2" onclick="selecionarModoPlayers(2);">
-                            <span>⚔️ 2 Players</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="config-section-card">
-                    <span class="config-section-title">2. Dificuldade</span>
+                    <span class="config-section-title">1. Dificuldade</span>
                     <div class="config-btn-row">
                         <button class="config-opt-btn active-opt" id="btnDifFacil" onclick="selecionarDificuldade('FACIL');">
                             <span>🌱 Fácil</span>
@@ -1296,7 +1313,7 @@
                 </div>
 
                 <div class="config-section-card">
-                    <span class="config-section-title">3. Roleta do Alfabeto Roda a Roda</span>
+                    <span class="config-section-title">2. Roleta do Alfabeto Roda a Roda</span>
                     <div class="roleta-roda-roda-wrapper">
                         
                         <div class="clock-wheel-container">
@@ -1520,6 +1537,7 @@ let complexoExpansivelAberto = false;
 let extremoExpansivelAberto = false;
 
 let modoPlayersSelecionado = 1;
+let elementosPortalSelecionados = [];
 let dificuldadeSelecionada = 'FACIL'; 
 let roletaRodando = false;
 let roletaAnimId = null;
@@ -1589,10 +1607,45 @@ function construirDiscoRelogioRoleta() {
 }
 
 function selecionarModoPlayers(num) {
-    AudioFX.click();
     modoPlayersSelecionado = num;
-    document.getElementById('btnPlayers1').classList.toggle('active-opt', num === 1);
-    document.getElementById('btnPlayers2').classList.toggle('active-opt', num === 2);
+    document.getElementById('btnPlayers1')?.classList.toggle('active-opt', num === 1);
+    document.getElementById('btnPlayers2')?.classList.toggle('active-opt', num === 2);
+}
+
+function selecionarElementalPortal(elemento) {
+    if (!ELEMENT_THEMES[elemento]) return;
+    AudioFX.click();
+    const posicao = elementosPortalSelecionados.indexOf(elemento);
+    if (posicao >= 0) {
+        elementosPortalSelecionados.splice(posicao, 1);
+    } else if (elementosPortalSelecionados.length < 2) {
+        elementosPortalSelecionados.push(elemento);
+    } else {
+        const aviso = document.getElementById('portalSelectionHint');
+        if (aviso) aviso.textContent = 'Desmarque um elemental para escolher outro';
+        return;
+    }
+
+    modoPlayersSelecionado = elementosPortalSelecionados.length === 2 ? 2 : 1;
+    document.querySelectorAll('.portal-element-choice').forEach(botao => {
+        const selecionado = elementosPortalSelecionados.includes(botao.dataset.elemento);
+        botao.classList.toggle('selected', selecionado);
+        botao.setAttribute('aria-pressed', String(selecionado));
+    });
+    document.getElementById('portalModeOne')?.classList.toggle('active', modoPlayersSelecionado === 1);
+    document.getElementById('portalModeTwo')?.classList.toggle('active', modoPlayersSelecionado === 2);
+
+    if (elementosPortalSelecionados.length > 0) mudarElementoP1(elementosPortalSelecionados[0]);
+    if (elementosPortalSelecionados.length > 1) mudarElementoP2(elementosPortalSelecionados[1]);
+
+    const aviso = document.getElementById('portalSelectionHint');
+    if (aviso) {
+        aviso.textContent = elementosPortalSelecionados.length === 0
+            ? 'Toque em 1 ou 2 elementais'
+            : elementosPortalSelecionados.length === 1
+                ? `${ELEMENT_THEMES[elementosPortalSelecionados[0]].heroName} • 1 Player`
+                : `${ELEMENT_THEMES[elementosPortalSelecionados[0]].heroName} + ${ELEMENT_THEMES[elementosPortalSelecionados[1]].heroName} • 2 Players`;
+    }
 }
 
 function selecionarDificuldade(dif) {
@@ -1849,43 +1902,23 @@ function fecharTodasGavetasMobile() {
 }
 
 (function initIntroPortal() {
-    const SENHA_CORRETA = "Sabedoria";
-
-    window.alternarVisibilidadeSenha = function() {
-        if (typeof AudioFX !== 'undefined') AudioFX.click();
-        const input = document.getElementById('introPassInput');
-        const icon = document.getElementById('passToggleIcon');
-        if (!input || !icon) return;
-        input.type = (input.type === 'password') ? 'text' : 'password';
-        icon.textContent = (input.type === 'text') ? '👁️' : '🔮';
-    };
-
     window.tentarEntrarPortal = function() {
-        const input = document.getElementById('introPassInput');
-        const errorMsg = document.getElementById('introErrorMsg');
-        const val = input ? input.value.trim() : '';
-
-        if (val === SENHA_CORRETA) {
-            if (typeof AudioFX !== 'undefined') AudioFX.success();
-            document.getElementById('introScreen').style.display = 'none';
-            document.body.classList.add('autenticado');
-        } else {
-            if (typeof AudioFX !== 'undefined') AudioFX.error();
-            if (errorMsg) errorMsg.textContent = "✨ A Palavra Mágica incorreta! Tente novamente.";
+        if (elementosPortalSelecionados.length < 1) {
+            const aviso = document.getElementById('portalSelectionHint');
+            if (aviso) aviso.textContent = 'Escolha pelo menos 1 elemental para continuar';
+            if (typeof AudioFX !== 'undefined') AudioFX.click();
+            return;
         }
+        modoPlayersSelecionado = elementosPortalSelecionados.length === 2 ? 2 : 1;
+        if (typeof AudioFX !== 'undefined') AudioFX.success();
+        document.getElementById('introScreen').style.display = 'none';
+        document.body.classList.add('autenticado');
     };
 
     document.addEventListener('DOMContentLoaded', () => {
         construirDiscoRelogioRoleta();
-        const input = document.getElementById('introPassInput');
-        if (input) {
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') window.tentarEntrarPortal();
-            });
-        }
         atualizarCoresBotoesMobile();
     });
-
     window.abrirModalIntro = function(id) {
         if (typeof AudioFX !== 'undefined') AudioFX.click();
         const el = document.getElementById(id);
