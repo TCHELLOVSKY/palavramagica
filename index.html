@@ -82,13 +82,13 @@
     <div class="app-container">
         <!-- Espaço exato do botão azul -->
         <div class="pill-slot">
-            <!-- Botão de Instalação (aparece se o navegador liberar o PWA) -->
-            <button id="btn-install" class="action-btn" style="display: none;">
+            <!-- O botão fica disponível mesmo antes de o navegador liberar o prompt. -->
+            <button id="btn-install" class="action-btn">
                 Instalar
             </button>
 
             <!-- Botão padrão para abrir o jogo caso já esteja instalado ou no navegador -->
-            <a id="btn-play" href="./jogo.html" class="action-btn">
+            <a id="btn-play" href="./jogo.html" class="action-btn" style="display: none;">
                 Jogar Agora
             </a>
         </div>
@@ -108,14 +108,11 @@
         const btnInstall = document.getElementById('btn-install');
         const btnPlay = document.getElementById('btn-play');
 
-        // Quando o Android/Chrome identificar que o app pode ser instalado:
+        // O navegador só oferece a instalação nativa quando todos os requisitos do PWA
+        // forem atendidos. Guardamos o evento para usá-lo após o clique do usuário.
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            
-            // Troca o botão "Jogar Agora" pelo "Instalar" exatamente no mesmo lugar
-            btnPlay.style.display = 'none';
-            btnInstall.style.display = 'flex';
         });
 
         // Ação de clique no botão Instalar
@@ -124,10 +121,23 @@
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 deferredPrompt = null;
-                
-                // Após instalar (ou fechar o aviso), volta para o botão Jogar Agora
-                btnInstall.style.display = 'none';
-                btnPlay.style.display = 'flex';
+                if (outcome === 'accepted') {
+                    btnInstall.style.display = 'none';
+                    btnPlay.style.display = 'flex';
+                }
+                return;
+            }
+
+            // Safari no iPhone/iPad não dispara beforeinstallprompt. Em outros
+            // navegadores, a ausência do evento normalmente indica um requisito pendente.
+            const isAppleMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            if (isAppleMobile) {
+                alert('Para instalar: toque em Compartilhar e escolha “Adicionar à Tela de Início”.');
+            } else if (!window.isSecureContext) {
+                alert('A instalação exige uma página HTTPS (ou localhost durante o desenvolvimento).');
+            } else {
+                alert('Este navegador ainda não liberou a instalação. Confira se o manifesto e o service worker estão acessíveis e válidos, e tente pelo Chrome ou Edge.');
             }
         });
 
@@ -136,6 +146,12 @@
             btnInstall.style.display = 'none';
             btnPlay.style.display = 'flex';
         });
+
+        // Se a página já estiver instalada, mostra diretamente a ação de abrir.
+        if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+            btnInstall.style.display = 'none';
+            btnPlay.style.display = 'flex';
+        }
     </script>
 </body>
 </html>
