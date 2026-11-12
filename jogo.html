@@ -299,6 +299,7 @@
         padding: 0 4px;
     }
 
+    #niveisBar { display: none !important; }
     .niveis-bar {
         display: flex;
         gap: 4px;
@@ -333,20 +334,22 @@
         z-index: 10001;
         background: rgba(15, 23, 42, 0.95);
         border: 2px solid var(--toggle-border-color, #38bdf8);
-        color: #ffffff;
+        color: var(--toggle-icon-color, #ffffff);
         padding: 10px 8px;
         font-size: 0.85rem;
         font-weight: 900;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5), 0 0 14px var(--toggle-glow-color, rgba(56,189,248,.5));
         backdrop-filter: blur(8px);
         display: flex;
         align-items: center;
         gap: 4px;
     }
 
-    #toggleP1Btn { left: 0; border-radius: 0 14px 14px 0; border-left: none; }
-    #toggleP2Btn { right: 0; border-radius: 14px 0 0 14px; border-right: none; }
+    #toggleP1Btn { left: 0; border-radius: 0 14px 14px 0; border-left: none; --toggle-border-color: #00d2ff; --toggle-icon-color: #00d2ff; --toggle-glow-color: rgba(0,210,255,.62); }
+    #toggleP2Btn { right: 0; border-radius: 14px 0 0 14px; border-right: none; --toggle-border-color: #ff4e50; --toggle-icon-color: #ff4e50; --toggle-glow-color: rgba(255,78,80,.62); }
+    #p1Arrow, #p2Arrow { color: var(--toggle-icon-color); text-shadow: 0 0 8px var(--toggle-glow-color); }
+    #p1IconElem, #p2IconElem { filter: drop-shadow(0 0 6px var(--toggle-glow-color)); }
 
     .mobile-drawer-overlay {
         display: none;
@@ -940,7 +943,14 @@
         border-bottom: 1px solid rgba(255,255,255,.12);
         margin-bottom: 6px;
     }
-    .quadrante-header #turnBadge { color: #93c5fd !important; }
+    #quadrantePalavra .quadrante-header { color: var(--q2-primary); }
+    #quadrantePalavra .quadrante-header #turnBadge { color: var(--q2-primary) !important; }
+    #quadrantePalavra #btnIniciarJogo { background: var(--q2-accent); border-color: var(--q2-primary); box-shadow: 0 0 12px var(--q2-glow); transition: background .2s ease, border-color .2s ease, box-shadow .2s ease; }
+    #q5ControlesContainer[data-theme="agua"] { --q5-heading-color: #00d2ff; }
+    #q5ControlesContainer[data-theme="fogo"] { --q5-heading-color: #ff4e50; }
+    #q5ControlesContainer[data-theme="terra"] { --q5-heading-color: #2ecc71; }
+    #q5ControlesContainer[data-theme="ar"] { --q5-heading-color: #c084fc; }
+    #q5ControlesContainer .quadrante-header { color: var(--q5-heading-color, #00d2ff); }
     .q2-top-image {
         background: radial-gradient(ellipse at 50% 35%, color-mix(in srgb, var(--q2-primary) 12%, #101827), #060b14 76%);
         border: 1px solid color-mix(in srgb, var(--q2-primary) 55%, #334155);
@@ -1266,15 +1276,15 @@
     <!-- Q2 — ROLETA RODA A RODA E ILUSTRAÇÃO -->
     <div class="quadrante q2-principal quadrante-central" id="quadrantePalavra" data-theme="agua">
         <div class="quadrante-header">
-            <span>🖼️ Q2 · Roleta Roda a Roda / Desafio</span>
-            <span id="turnBadge" style="font-weight: 900; color: #2563eb; display: none;">🔵 Vez de Player 1</span>
+            <span>Q2 - RESOLVA O ENIGMA</span>
+            <span id="turnBadge" style="font-weight: 900; display: none;">Vez de Player 1</span>
         </div>
 
         <!-- Parte superior de Q2 ocultada inicialmente -->
         <div class="q2-top-image" id="q2TopImageContainer" style="display: none;">
             <div class="top-left-actions">
                 <button class="btn-action-sm btn-dica" onclick="lerDica(); this.blur();">💡 Dica</button>
-                <button class="btn-action-sm btn-dica" id="btnIniciarJogo" onclick="alternarIniciarJogo(); this.blur();" title="Iniciar / Pausar Jogo" style="background: #2563eb; border-color: #1d4ed8;">
+                <button class="btn-action-sm btn-dica" id="btnIniciarJogo" onclick="alternarIniciarJogo(); this.blur();" title="Iniciar / Pausar Jogo">
                     <span id="startIcon">▶️</span>
                     <span id="startText">Iniciar</span>
                 </button>
@@ -2069,6 +2079,22 @@ const ELEMENT_THEMES = {
     ar: { avatar: '🌀', heroName: 'CLÃ DO AR', title: 'Domador dos Ventos', glow: 'rgba(168, 85, 247, 0.75)' }
 };
 
+const TOGGLE_ELEMENT_COLORS = {
+    agua: { border: '#00d2ff', glow: 'rgba(0,210,255,.72)' },
+    fogo: { border: '#ff4e50', glow: 'rgba(255,78,80,.72)' },
+    terra: { border: '#2ecc71', glow: 'rgba(46,204,113,.72)' },
+    ar: { border: '#c084fc', glow: 'rgba(192,132,252,.72)' }
+};
+
+function atualizarCorToggleElemental(numero, elemento) {
+    const cores = TOGGLE_ELEMENT_COLORS[elemento];
+    const botao = document.getElementById(`toggleP${numero}Btn`);
+    if (!cores || !botao) return;
+    botao.style.setProperty('--toggle-border-color', cores.border);
+    botao.style.setProperty('--toggle-icon-color', cores.border);
+    botao.style.setProperty('--toggle-glow-color', cores.glow);
+}
+
 const ELEMENT_ICONS = {
     agua:  ['💧', '🌊', '❄️', '🧊', '🐬', '⚓', '🌧️', '🔮', '🔱', '👑'],
     fogo:  ['🔥', '🌋', '☀️', '💥', '🦅', '⚔️', '☄️', '🛡️', '🔱', '👑'],
@@ -2796,6 +2822,7 @@ function mudarElementoP1(elem) {
     AudioFX.click();
     elementoP1 = elem;
     document.getElementById('q4-shield').setAttribute('data-theme', elem);
+    atualizarCorToggleElemental(1, elem);
     document.querySelectorAll('#q4-shield .elem-select-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`p1-elem-${elem}`).classList.add('active');
     document.getElementById('p1-rpgAvatar').textContent = ELEMENT_THEMES[elem].avatar;
@@ -2811,6 +2838,7 @@ function mudarElementoP2(elem) {
     AudioFX.click();
     elementoP2 = elem;
     document.getElementById('q6-shield').setAttribute('data-theme', elem);
+    atualizarCorToggleElemental(2, elem);
     document.querySelectorAll('#q6-shield .elem-select-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`p2-elem-${elem}`).classList.add('active');
     document.getElementById('p2-rpgAvatar').textContent = ELEMENT_THEMES[elem].avatar;
@@ -2822,10 +2850,10 @@ function mudarElementoP2(elem) {
 }
 
 function atualizarTemaQ2() {
-    const quadranteQ2 = document.getElementById('quadrantePalavra');
-    if (!quadranteQ2) return;
     const elementoAtivo = jogadorAtual === 2 ? elementoP2 : elementoP1;
-    quadranteQ2.setAttribute('data-theme', elementoAtivo || 'agua');
+    const tema = elementoAtivo || 'agua';
+    document.getElementById('quadrantePalavra')?.setAttribute('data-theme', tema);
+    document.getElementById('q5ControlesContainer')?.setAttribute('data-theme', tema);
 }
 
 function montarCategorias() {
@@ -2974,16 +3002,11 @@ function carregarPalavra() {
 }
 
 function atualizarIndicadorTurnoUI() {
+    atualizarTemaQ2();
     const badge = document.getElementById('turnBadge');
-    if (badge) {
-        if (modoJogo === 2 && jogadorAtual === 2) {
-            badge.textContent = `🔴 Vez de ${obterNomeJogador(2)}`;
-            badge.style.color = '#ef4444';
-        } else {
-            badge.textContent = `🔵 Vez de ${obterNomeJogador(1)}`;
-            badge.style.color = '#2563eb';
-        }
-    }
+    if (!badge) return;
+    const jogadorTurno = modoJogo === 2 && jogadorAtual === 2 ? 2 : 1;
+    badge.textContent = `Vez de ${obterNomeJogador(jogadorTurno)}`;
 }
 
 function atualizarTelaPalavra() {
